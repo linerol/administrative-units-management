@@ -1,5 +1,5 @@
 import { Idepartment } from "src/interfaces/department/department.interface";
-import { IsNotEmpty, IsNumber, isNumber, IsString, MaxLength } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsUppercase } from "class-validator";
 
 // export class CreateDepartmentDto extends IDepartment
 

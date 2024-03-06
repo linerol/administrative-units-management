@@ -9,7 +9,16 @@ import { Department, DepartmentDocument } from '../../schemas/department/departm
 export class DepartmentService {
     constructor(@InjectModel(Department.name) private readonly departmentModel: Model<DepartmentDocument>) { }
 
+
     async create(createDepartmentDto: CreateDepartmentDto): Promise<DepartmentDocument> {
+        const nameLowercase = createDepartmentDto.name.toLowerCase();
+
+        const existingDepartment = await this.departmentModel.findOne({ name: { $regex: new RegExp(`^${nameLowercase}$`, 'i') } });
+
+        if (existingDepartment) {
+            throw new Error('This department already exists.');
+        }
+
         const department = new this.departmentModel(createDepartmentDto);
         return department.save();
     }
