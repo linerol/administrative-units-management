@@ -1,4 +1,3 @@
-import { Idepartment } from "src/interfaces/department/department.interface";
 import { IsNotEmpty, IsNumber, IsString, IsUppercase } from "class-validator";
 
 // export class CreateDepartmentDto extends IDepartment
@@ -14,10 +13,7 @@ export class CreateDepartmentDto {
 
     @IsNumber()
     @IsNotEmpty()
-    readonly nb_commune: number;
+    readonly nbCommune: number;
 
-    @IsNumber()
-    @IsNotEmpty()
-    readonly nb_district: number;
 
 }

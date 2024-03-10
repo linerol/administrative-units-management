@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Param, Delete, Put, Res, HttpStatus } from
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from '../../dtos/department/create-department.dto';
 import { UpdateDepartmentDto } from '../../dtos/department/update-department.dto';
-import { response } from 'express';
 
 
 @Controller('department')

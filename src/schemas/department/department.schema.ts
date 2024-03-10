@@ -12,10 +12,7 @@ export class Department {
     description: string;
 
     @Prop({ required: true })
-    nb_commune: number;
-
-    @Prop({ required: true })
-    nb_district: number;
+    nbCommune: number;
 
 }
 
