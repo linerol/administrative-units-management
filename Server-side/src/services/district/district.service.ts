@@ -40,8 +40,8 @@ export class DistrictService {
         return this.districtModel.find().populate('communeId').exec();
     }
 
-    async findOne(id: string) {
-        return this.districtModel.findById(id).populate('communeId');
+    async findOne(name: string) {
+        return this.districtModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
     }
 
     async update(name: string, updateDistrictDto: UpdateDistrictDto) {

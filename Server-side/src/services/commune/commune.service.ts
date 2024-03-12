@@ -41,8 +41,8 @@ export class CommuneService {
         return this.communeModel.find().populate('departmentId').exec();
     }
 
-    async findOne(id: string) {
-        return this.communeModel.findById(id).populate('departmentId');
+    async findOne(name: string) {
+        return this.communeModel.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
     }
 
     async update(name: string, updateCommuneDto: UpdateCommuneDto) {

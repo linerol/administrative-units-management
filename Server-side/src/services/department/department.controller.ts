@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Param, Delete, Put, Res, HttpStatus } from
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from '../../dtos/department/create-department.dto';
 import { UpdateDepartmentDto } from '../../dtos/department/update-department.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('department')
 @Controller('department')
 export class DepartmentController {
     constructor(private readonly departmentService: DepartmentService) { }
@@ -17,7 +18,7 @@ export class DepartmentController {
                 newDepartment,
             });
 
-        } catch(err) {
+        } catch (err) {
             return response.status(HttpStatus.BAD_REQUEST).json({
                 message: 'Error: Department not created!',
                 error: 'Bad request',
@@ -31,23 +32,18 @@ export class DepartmentController {
         return this.departmentService.findAll();
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.departmentService.findOne(id);
+    @Get(':name')
+    findOne(@Param('name') name: string) {
+        return this.departmentService.findOne(name);
     }
 
-    @Put(':id')
-    update(@Param('id') id: string, @Body() updateDepartmentDto: UpdateDepartmentDto) {
-        return this.departmentService.update(id, updateDepartmentDto);
+    @Put(':name')
+    update(@Param('name') name: string, @Body() updateDepartmentDto: UpdateDepartmentDto) {
+        return this.departmentService.update(name, updateDepartmentDto);
     }
 
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.departmentService.remove(id);
-    }
-
-    @Post(':id')
-    test(): string {
-        return 'The test works!';
+    @Delete(':name')
+    remove(@Param('name') name: string) {
+        return this.departmentService.remove(name);
     }
 }

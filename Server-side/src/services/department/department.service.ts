@@ -27,8 +27,8 @@ export class DepartmentService {
         return this.departmentModel.find().exec();
     }
 
-    async findOne(id: string) {
-        return this.departmentModel.findById(id);
+    async findOne(name: string) {
+        return this.departmentModel.findOne({ name: { $regex: new RegExp(name, 'i') } });
     }
 
     async update(name: string, updateDepartmentDto: UpdateDepartmentDto) {
