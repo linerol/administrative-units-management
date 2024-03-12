@@ -15,6 +15,6 @@ describe('DepartmentController', () => {
   });
 
   it('should be defined', () => {
-    expect(controller.test()).toBe('The test works!');
+    expect(controller).toBeDefined();
   });
 });
