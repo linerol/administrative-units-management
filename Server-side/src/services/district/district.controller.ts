@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, Res, HttpStatus  } from '@nestjs/common';
-import { DistrictService } from '../district.service';
+import { DistrictService } from './district.service';
 import { CreateDistrictDto } from 'src/dtos/district/create-district.dtp';
 import { UpdateDistrictDto } from 'src/dtos/district/update-district.dtp';
 

@@ -19,6 +19,12 @@ export class CommuneService {
             throw new Error('This department doesn\'t exist !');
         }
 
+        const existingCommune = await this.communeModel.findOne({ name: { $regex: new RegExp(`^${createCommuneDto.name}$`, 'i') } });
+
+        if (existingCommune) {
+            throw Error('This commune already exists !')
+        }
+
         const communes = await this.communeModel.find({ departmentId: department._id });
         if (communes.length == department.nbCommune) {
             throw new Error('The number of communes linked to this department has reached its limit !');
@@ -39,15 +45,15 @@ export class CommuneService {
         return this.communeModel.findById(id).populate('departmentId');
     }
 
-    async update(id: string, updateCommuneDto: UpdateCommuneDto) {
+    async update(name: string, updateCommuneDto: UpdateCommuneDto) {
         const department = await this.departmentModel.findOne({ name: { $regex: new RegExp(`^${updateCommuneDto.departmentName}$`, 'i') } });
         if (!department) {
             throw new Error('This department doesn\'t exist !');
         }
-        return this.communeModel.findByIdAndUpdate(id, { ...updateCommuneDto, departmentId: department._id });
+        return this.communeModel.findOneAndUpdate({ name: { $regex: new RegExp(`^${name}$`, 'i') } }, { ...updateCommuneDto, departmentId: department._id });
     }
 
-    async remove(id: string) {
-        return this.communeModel.findByIdAndDelete(id);
+    async remove(name: string) {
+        return this.communeModel.findOneAndDelete({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
     }
 }

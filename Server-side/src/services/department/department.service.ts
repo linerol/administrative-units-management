@@ -31,12 +31,12 @@ export class DepartmentService {
         return this.departmentModel.findById(id);
     }
 
-    async update(id: string, updateDepartmentDto: UpdateDepartmentDto) {
-        return this.departmentModel.findByIdAndUpdate(id, updateDepartmentDto);
+    async update(name: string, updateDepartmentDto: UpdateDepartmentDto) {
+        return this.departmentModel.findOneAndUpdate({ name: { $regex: new RegExp(name, 'i') } }, updateDepartmentDto);
     }
 
-    async remove(id: string) {
-        return this.departmentModel.findByIdAndDelete(id);
+    async remove(name: string) {
+        return this.departmentModel.findOneAndDelete({ name: { $regex: new RegExp(name, 'i') } });
     }
 }
 

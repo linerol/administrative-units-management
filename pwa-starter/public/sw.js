@@ -5,6 +5,14 @@ importScripts(
 // This is your Service Worker, you can put any of your custom Service Worker
 // code in this file, above the `precacheAndRoute` line.
 
+self.addEventListener('push', (event) => {
+    event.waitUntil(
+        registration.showNotification("Hello!", {
+            body: "This is a push notification!",
+        })
+    );
+});
+
 // When widget is installed/pinned, push initial state.
 self.addEventListener('widgetinstall', (event) => {
     event.waitUntil(updateWidget(event));

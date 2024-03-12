@@ -19,6 +19,11 @@ export class DistrictService {
             throw new Error('This commune doesn\'t exist !');
         }
 
+        const existingDistrict = await this.districtModel.findOne({ name: { $regex: new RegExp(`^${createDistrictDto.name}$`, 'i') } })
+        if (existingDistrict) {
+            throw Error('This district already exists !');
+        }
+
         const districts = await this.districtModel.find({ communeId: commune._id });
         if (districts.length == commune.nbDistrict) {
             throw new Error('The number of districts linked to this commune has reached its limit !');
@@ -39,16 +44,16 @@ export class DistrictService {
         return this.districtModel.findById(id).populate('communeId');
     }
 
-    async update(id: string, updateDistrictDto: UpdateDistrictDto) {
+    async update(name: string, updateDistrictDto: UpdateDistrictDto) {
         const commune = await this.communeModel.findOne({ name: { $regex: new RegExp(`^${updateDistrictDto.communeName}$`, 'i') } });
         if (!commune) {
             throw new Error('This commune doesn\'t exist !');
         }
-        return this.districtModel.findByIdAndUpdate(id, { ...updateDistrictDto, communeId: commune._id });
+        return this.districtModel.findOneAndUpdate({ name: { $regex: new RegExp(`^${name}$`, 'i') } }, { ...updateDistrictDto, communeId: commune._id });
     }
 
-    async remove(id: string) {
-        return this.districtModel.findByIdAndDelete(id);
+    async remove(name: string) {
+        return this.districtModel.findOneAndDelete({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
     }
 
 }
